@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orphanage Finder</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container" style="padding-top: 20px; padding-bottom: 20px">
+            <a class="navbar-brand" href="index.html">Orphanage Finder</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mission">Mission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#success-stories">Success Stories</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+
+        <div class="section" id="mission" style="padding-top:30px">
+            <div class="row">
+                <div class="col-md-6" style="margin-bottom:50px;">
+                    <h2 class="section-heading">Find our Orphanages</h2>
+                    <p>Discover and connect with orphanages in your area</p>
+                    <div class="form-group">
+                        <label for="type-select">Filter by Type:</label>
+                        <select class="form-control" id="type-select">
+                            <option value="">All</option>
+                            <option value="Kids">For Kids</option>
+                            <option value="Older People">For Older People</option>
+                            <option value="Special Needs">For Special Needs</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city-select">Filter by City:</label>
+                        <select class="form-control" id="city-select">
+                            <option value="">All</option>
+                            <option value="Visakhapatnam">Visakhapatnam</option>
+                            <option value="Rajahmundry">Rajahmundry</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="explore-link">Explore Orphanages</button>
+                </div>
+                <div class="col-md-12">
+                    <div id="orphanages">
+                        <h2 class="section-heading"></h2>
+                        <div class="row" id="orphanages-list"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // Sample orphanage data (replace with your own data)
+const orphanagesData = [
+  { 
+      name: "Manasu Orphanage",
+      type: "Kids",
+      city: "Visakhapatnam",
+      owner: "Rama Rao",
+      contact: "ramarao123@gmail.com",
+      residents: 50,
+      employees: 10,
+      image: "images/manasuOrph.jpg"
+  },
+  { 
+      name: "Spoorthi Welfare Society",
+      type: "Kids",
+      city: "Visakhapatnam",
+      owner: "Gopala Krishna",
+      contact: "gkrishna123@gmail.com",
+      residents: 30,
+      employees: 8,
+      image: "images/spoorthiOrph.jpg"
+  },
+  { 
+      name: "Maathrusri retirement oldage home",
+      type: "Older People",
+      city: "Visakhapatnam",
+      owner: "Vijay Kumar",
+      contact: "vijay123@gmail.com",
+      residents: 50,
+      employees: 10,
+      image: "images/matrusriOldag.jpg"
+  },
+  { 
+      name: "Gouthami Old Age Home",
+      type: "Older People",
+      city: "Rajahmundry",
+      owner: "Maganti Murali Mohan",
+      contact: "mmurali123@gmail.com",
+      residents: 30,
+      employees: 8,
+      image: "images/goutamioldage.jpg"
+  },
+  { 
+      name: "Samruddi Children Home",
+      type: "Kids",
+      city: "Hyderabad",
+      owner: "Shaheen",
+      contact: "shaheen123@gmail.com",
+      residents: 20,
+      employees: 10,
+      image: "images/samruddiOrph.jpg"
+  },
+  // Add more orphanage objects as needed
+];
+
+        // Function to generate orphanage cards HTML
+        function generateOrphanageCards(orphanages) {
+          const orphanagesList = document.getElementById("orphanages-list");
+            orphanagesList.innerHTML = "";
+
+            if (orphanages.length === 0) {
+              const message = document.createElement("p");
+                message.textContent = "No orphanages found.";
+                orphanagesList.appendChild(message);
+            } else {
+                orphanages.forEach(orphanage => {
+                    const card = document.createElement("div");
+                card.className = "col-md-6 mb-4";
+
+                card.innerHTML = `
+                  <div class="card">
+                    <img src="${orphanage.image}" class="card-img-top" alt="Orphanage Image" style="height:300px">
+                    <div class="card-body">
+                      <h5 class="card-title" style="margin-bottom:1.5rem">${orphanage.name}</h5>
+                      <p class="card-text"><strong>City:</strong> ${orphanage.city}</p>
+                      <p class="card-text"><strong>Owner:</strong> ${orphanage.owner}</p>
+                      <p class="card-text"><strong>Contact:</strong> ${orphanage.contact}</p>
+                      <p class="card-text"><strong>Residents:</strong> ${orphanage.residents}</p>
+                      <p class="card-text"><strong>Employees:</strong> ${orphanage.employees}</p>
+                    </div>
+                  </div>
+                `;
+
+                orphanagesList.appendChild(card);
+            });
+        }
+        }
+
+        // Function to handle explore link click event
+        function exploreOrphanages() {
+          const typeSelect = document.getElementById("type-select");
+          const citySelect = document.getElementById("city-select");
+
+          const selectedType = typeSelect.value;
+          const selectedCity = citySelect.value;
+
+            let filteredOrphanages = orphanagesData;
+
+            if (selectedType) {
+                filteredOrphanages = filteredOrphanages.filter(orphanage => orphanage.type === selectedType);
+            }
+
+            if (selectedCity) {
+                filteredOrphanages = filteredOrphanages.filter(orphanage => orphanage.city === selectedCity);
+            }
+
+            generateOrphanageCards(filteredOrphanages);
+            location.hash = "#orphanages";
+        }
+
+        // Event listener for explore link
+        document.getElementById("explore-link").addEventListener("click", exploreOrphanages);
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
